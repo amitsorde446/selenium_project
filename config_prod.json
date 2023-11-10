@@ -1,0 +1,32 @@
+{
+  "driverConfig": {
+    "driverPath": "/usr/local/bin/chromedriver",
+    "s3": {
+      "AWS_ACCESS_KEY_ID": "AKIAY3SVM6JRFMFM4SVF",
+      "AWS_SECRET_ACCESS_KEY": "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",
+      "AWS_STORAGE_BUCKET_NAME": "bsa-internet-banking-file-prod",
+      "REGION_HOST": "ap-south-1"
+    }
+  },
+  "dbConfig": {
+    "host": "142.93.215.203",
+    "port": 3306,
+    "user": "qualitybsajavacode",
+    "password": "HG75fdh#HMtr",
+    "database": "bankstatement",
+    "table_nm": "python_logs"
+  },
+  "rdbConfig": {
+    "host": "scoreme-qa-cache.xggsk8.0001.aps1.cache.amazonaws.com",
+    "port": 6379,
+    "db":0
+  },
+  "queue_data": {
+    "rec_queue_url": "https://sqs.ap-south-1.amazonaws.com/608990720610/bsa-internet-banking-prod-queue",
+    "send_queue_url1": "https://sqs.ap-south-1.amazonaws.com/608990720610/bsa-python-to-java-login-prod-queue",
+    "send_queue_url2": "https://sqs.ap-south-1.amazonaws.com/608990720610/bsa-python-to-java-bankstatement-prod-queue",
+    "AWS_ACCESS_KEY_ID": "AKIAY3SVM6JRFMFM4SVF",
+    "AWS_SECRET_ACCESS_KEY": "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",
+    "REGION_HOST": "ap-south-1"
+  }
+}

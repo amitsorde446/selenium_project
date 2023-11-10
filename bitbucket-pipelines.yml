@@ -1,0 +1,109 @@
+image: atlassian/default-image:2
+pipelines:
+  branches:
+    quality:
+      - step:
+          trigger: automatic 
+          services:
+            - docker
+          caches:
+            - pip
+            - docker
+          script:
+            - apt-get update && apt-get install -y python3 python3-pip
+            # - curl -O https://bootstrap.pypa.io/get-pip.py
+            # - python get-pip.py
+            - pip3 install boto3==1.3.0
+            - pip3 install rsa
+           #- pip3 install awscli
+            - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
+            - unzip awscliv2.zip
+            - ./aws/install
+            - IMAGE="608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-quality-repository"
+            - TAG=${BITBUCKET_BRANCH:-$BITBUCKET_TAG}
+            - aws configure set aws_access_key_id "AKIAY3SVM6JRJCV6AZHN"
+            - aws configure set aws_secret_access_key "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"
+            - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 608990720610.dkr.ecr.ap-south-1.amazonaws.com
+            - docker build -t sm-bsa-data-fetch-quality-repository .
+            - docker tag sm-bsa-data-fetch-quality-repository:latest 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-quality-repository:latest
+            - docker push 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-quality-repository:latest
+    develop:
+      - step:
+          trigger: automatic
+          services:
+            - docker
+          caches:
+            - pip
+            - docker
+          script:
+            - apt-get update && apt-get install -y python3 python3-pip
+            # - curl -O https://bootstrap.pypa.io/get-pip.py
+            # - python get-pip.py
+            - pip3 install boto3==1.3.0
+            - pip3 install rsa
+           #- pip3 install awscli
+            - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
+            - unzip awscliv2.zip
+            - ./aws/install
+            - IMAGE="608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-develop-repository"
+            - TAG=${BITBUCKET_BRANCH:-$BITBUCKET_TAG}
+            - aws configure set aws_access_key_id "AKIAY3SVM6JRJCV6AZHN"
+            - aws configure set aws_secret_access_key "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"
+            - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 608990720610.dkr.ecr.ap-south-1.amazonaws.com
+            - docker build -t sm-bsa-data-fetch-develop-repository .
+            - docker tag sm-bsa-data-fetch-develop-repository:latest 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-develop-repository:latest
+            - docker push 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-develop-repository:latest
+
+    sandbox:
+      - step:
+          trigger: automatic
+          services:
+            - docker
+          caches:
+            - pip
+            - docker
+          script:
+            - apt-get update && apt-get install -y python3 python3-pip
+            # - curl -O https://bootstrap.pypa.io/get-pip.py
+            # - python get-pip.py
+            - pip3 install boto3==1.3.0
+            - pip3 install rsa
+            - pip3 install awscli
+           #- curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
+            - unzip awscliv2.zip
+            - ./aws/install
+            - IMAGE="608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-sandbox-repository"
+            - TAG=${BITBUCKET_BRANCH:-$BITBUCKET_TAG}
+            - aws configure set aws_access_key_id "AKIAY3SVM6JRJCV6AZHN"
+            - aws configure set aws_secret_access_key "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"
+            - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 608990720610.dkr.ecr.ap-south-1.amazonaws.com
+            - docker build -t sm-bsa-data-fetch-sandbox-repository .
+            - docker tag sm-bsa-data-fetch-sandbox-repository:latest 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-sandbox-repository:latest
+            - docker push 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-sandbox-repository:latest
+
+    master:
+      - step:
+          trigger: automatic
+          services:
+            - docker
+          caches:
+            - pip
+            - docker
+          script:
+            - apt-get update && apt-get install -y python3 python3-pip
+            # - curl -O https://bootstrap.pypa.io/get-pip.py
+            # - python get-pip.py
+            - pip3 install boto3==1.3.0
+            - pip3 install rsa
+          # - pip3 install awscli
+            - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
+            - unzip awscliv2.zip
+            - ./aws/install
+            - IMAGE="608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-prod-repository"
+            - TAG=${BITBUCKET_BRANCH:-$BITBUCKET_TAG}
+            - aws configure set aws_access_key_id "AKIAY3SVM6JRJCV6AZHN"
+            - aws configure set aws_secret_access_key "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"
+            - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 608990720610.dkr.ecr.ap-south-1.amazonaws.com
+            - docker build -t sm-bsa-data-fetch-prod-repository .
+            - docker tag sm-bsa-data-fetch-prod-repository:latest 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-prod-repository:latest
+            - docker push 608990720610.dkr.ecr.ap-south-1.amazonaws.com/sm-bsa-data-fetch-prod-repository:latest
